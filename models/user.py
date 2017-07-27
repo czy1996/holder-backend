@@ -1,6 +1,14 @@
 import hashlib
+from utils import (
+    log,
+)
 
 from . import Mongua
+from flask_wxapp import gen_3rd_session_key
+from .session import Session
+from flask import (
+    request,
+)
 
 
 class User(Mongua):
@@ -12,6 +20,11 @@ class User(Mongua):
             ('phone', int, -1),
             ('password', str, ''),
             ('salt', str, 'asdjf203'),
+            ('openid', str, 'shit'),
+            ('gender', int, 1),
+            ('city', str, ''),
+            ('country', str, ''),
+            ('avatarUrl', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
@@ -51,3 +64,38 @@ class User(Mongua):
         username_equals = self.name == username
         password_equals = self.password == self.salted_password(password)
         return username_equals and password_equals
+
+    @classmethod
+    def find_by_openid(cls, openid):
+        """
+        用 openid 查找，没有就新建一个
+        :param openid: 
+        :return: 
+        """
+        u = cls.find_one(openid=openid)
+        if u is None:
+            u = cls.new({
+                "openid": openid,
+            })
+        log(u)
+        return u
+
+    @classmethod
+    def auth(cls, code):
+        """
+        code 换取登录凭证
+        :param code: 
+        :return: 
+        """
+        from app import wxapp
+        info = wxapp.jscode2session(code)
+        session_id = gen_3rd_session_key()
+        log(info, type(info))
+        Session.new(session_id=session_id, openid=info['openid'], session_key=info['session_key'])
+        return session_id
+
+    @classmethod
+    def current_user(cls):
+        session_id = request.headers.get('Session_id', None)
+        openid = Session.openid_from_sessionid(session_id)
+        return cls.find_by_openid(openid)

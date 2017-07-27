@@ -53,14 +53,14 @@ def update_user():
 
 
 def test():
-    # add_user()
-    find_user()
-    # has_user()
-    get_user()
-    all_user()
-    # delete_user()
-    test_json()
-    update_user()
+    add_user()
+    # find_user()
+    # # has_user()
+    # get_user()
+    # # all_user()
+    # # # delete_user()
+    # # test_json()
+    # # update_user()
 
 
 if __name__ == '__main__':
