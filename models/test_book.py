@@ -2,8 +2,9 @@ from models.book import Book
 
 
 def test_add_title():
-    Book.add_title('油层物理')
-    Book.add_title('渗流力学', 'shit')
+    Book.add_title('油层物理学', thumb='https://img3.doubanio.com/lpic/s7628151.jpg')
+    Book.add_title('渗流力学基础', 'shit')
+    Book.add_title('算法设计与分析')
 
 
 def test_inc_one():
@@ -36,8 +37,7 @@ def test():
     # test_inc_one()
     # test_dec_one()
     # all_books()
-    test_inc()
-    test_dec()
+    test_add_title()
 
 
 if __name__ == '__main__':

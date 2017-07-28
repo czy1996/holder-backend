@@ -1,4 +1,5 @@
 from . import Mongua
+from utils import log
 
 
 class Book(Mongua):
@@ -10,6 +11,8 @@ class Book(Mongua):
             ('publisher', str, ''),
             ('douban_url', str, ''),
             ('inventory', int, 0),
+            ('isbn', str, ''),
+            ('thumb', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
@@ -40,11 +43,14 @@ class Book(Mongua):
         return cls.find_one(title=title)
 
     @classmethod
-    def add_title(cls, title='', description='暂无简介', publisher='', douban_url='', inventory=0):
-        cls.new({
+    def add_title(cls, title='', description='暂无简介', publisher='', douban_url='', inventory=0, **kwargs):
+        data = {
             'title': title,
             'description': description,
             'publisher': publisher,
             'douban_url': douban_url,
             'inventory': inventory,
-        })
+        }
+        data.update(kwargs)
+        b = cls.new(data)
+        return b
