@@ -33,11 +33,12 @@ def all_books():
 
 
 def test():
+    pass
     # test_add_title()
     # test_inc_one()
     # test_dec_one()
     # all_books()
-    test_add_title()
+    # test_add_title()
 
 
 if __name__ == '__main__':
