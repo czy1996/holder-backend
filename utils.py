@@ -27,3 +27,26 @@ def code2session(code):
 
 def json_response(obj):
     return Response(json.dumps(obj, ensure_ascii=False, indent=4), mimetype='application/json')
+
+
+def douban_isbn(isbn):
+    fields = "?fields=" + ','.join([
+        'title',
+        'summary',
+        'image',
+        'author',
+        'publisher',
+        'url',
+        'price',
+
+    ])
+    url = "https://api.douban.com/v2/book/isbn/" + isbn + fields
+    log(url)
+    r = requests.get(url)
+    log(json.dumps(r.json(), ensure_ascii=False, indent=4))
+    return json.loads(json.dumps(r.json()))
+
+
+if __name__ == '__main__':
+    douban_isbn('9787563615018')
+    douban_isbn('9787502146788')

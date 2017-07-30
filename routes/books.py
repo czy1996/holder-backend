@@ -29,6 +29,7 @@ def add():
     data = request.get_json()
     # log(data)
     b = Book.new(data)
+    b.fill_douban()
     return json_response(b.json())
 
 
@@ -36,7 +37,7 @@ def add():
 def delete(id):
     b = Book.get(id)
     b.delete()
-    return json_response(Book.get(id).json())  # BUG
+    return json_response(Book.get(id).json())
 
 
 @main.route('/update/<int:id>', methods=['POST'])
@@ -44,4 +45,4 @@ def update(id):
     b = Book.get(id)
     data = request.json
     b.update(data)
-    return json_response(Book.get(id).json())  # BUG
+    return json_response(Book.get(id).json())

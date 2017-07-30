@@ -1,5 +1,5 @@
 from . import Mongua
-from utils import log
+from utils import log, douban_isbn
 
 
 class Book(Mongua):
@@ -7,12 +7,16 @@ class Book(Mongua):
     def _fields(cls):
         fields = [
             ('title', str, ''),
-            ('description', str, ''),
+            ('description', str, '暂无'),
             ('publisher', str, ''),
             ('douban_url', str, ''),
             ('inventory', int, 0),
             ('isbn', str, ''),
             ('thumb', str, ''),
+            ('first_price', int, 0),
+            ('second_price', int, 0),
+            ('author', list, ''),
+            ('category', str, 'other'),
         ]
         fields.extend(super()._fields())
         return fields
@@ -54,3 +58,17 @@ class Book(Mongua):
         data.update(kwargs)
         b = cls.new(data)
         return b
+
+    def fill_douban(self):
+        if self.isbn is not None:
+            douban = douban_isbn(self.isbn)
+            data = {
+                'title': douban['title'],
+                'publisher': douban['publisher'],
+                'douban_url': douban['url'],
+                'author': douban['author'],
+                'thumb': douban['image'],
+                'description': douban['summary'],
+                'first_price': douban['price'],
+            }
+            self.update(data)

@@ -32,13 +32,19 @@ def all_books():
     print('all books', bs)
 
 
+def refill():
+    bs = Book.all()
+    for b in bs:
+        b.fill_douban()
+
+
 def test():
-    pass
     # test_add_title()
     # test_inc_one()
     # test_dec_one()
     # all_books()
     # test_add_title()
+    refill()
 
 
 if __name__ == '__main__':
