@@ -8,6 +8,7 @@ from config import app_id, secret
 
 from routes.login import main as login_routes
 from routes.books import main as books_routes
+from routes.user import main as user_routes
 
 wxapp = WXApp()
 
@@ -20,6 +21,7 @@ def create_app():
 
     app.register_blueprint(login_routes, url_prefix='/login')
     app.register_blueprint(books_routes, url_prefix='/book')
+    app.register_blueprint(user_routes, url_prefix='/user')
 
     return app
 

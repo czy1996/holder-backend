@@ -25,6 +25,8 @@ class User(Mongua):
             ('city', str, ''),
             ('country', str, ''),
             ('avatarUrl', str, ''),
+            ('dorm', str, ''),
+            ('cart', dict, {}),
         ]
         fields.extend(super()._fields())
         return fields
@@ -77,7 +79,7 @@ class User(Mongua):
             u = cls.new({
                 "openid": openid,
             })
-        log(u)
+        # log(u)
         return u
 
     @classmethod
@@ -99,3 +101,8 @@ class User(Mongua):
         session_id = request.headers.get('Session_id', None)
         openid = Session.openid_from_sessionid(session_id)
         return cls.find_by_openid(openid)
+
+    def add_cart(self, id, number=1):
+        n = self.cart.get(str(id), 0)
+        self.cart[str(id)] = n + number
+        self.save()
