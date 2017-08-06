@@ -4,7 +4,9 @@ from flask import (
     jsonify,
 )
 from models.user import User
-from utils import log
+from models.book import Book
+
+from utils import log, json_response
 
 main = Blueprint('user', __name__)
 
@@ -18,3 +20,18 @@ def add_cart(id):
     u = User.current_user()
     u.add_cart(id)
     return jsonify(u.json())
+
+
+@main.route('/getCart')
+def get_cart():
+    u = User.current_user()
+    log(u.cart.items())
+    r = []
+    for k, v in u.cart.items():
+        b = Book.get(int(k)).json()
+        b.update({
+            'quantity': v,
+        })
+        r.append(b)
+    # r = [Book.get(int(k)).json().update({'quantity': v}) for k, v in u.cart.items()]
+    return json_response(r)
