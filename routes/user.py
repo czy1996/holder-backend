@@ -35,3 +35,13 @@ def get_cart():
         r.append(b)
     # r = [Book.get(int(k)).json().update({'quantity': v}) for k, v in u.cart.items()]
     return json_response(r)
+
+
+@main.route('/updateCart', methods=['POST'])
+def update_cart():
+    u = User.current_user()
+    data = request.json
+    u.update({
+        'cart': data,
+    })
+    return jsonify(u.json())
