@@ -1,4 +1,5 @@
 from . import Mongua
+from datetime import datetime
 
 
 class Session(Mongua):
@@ -10,6 +11,7 @@ class Session(Mongua):
             ('session_id', str, ''),
             ('openid', str, ''),
             ('session_key', str, ''),
+            ('utcNow', datetime.utcnow, datetime.utcnow())
         ]
         fields.extend(super()._fields())
         return fields

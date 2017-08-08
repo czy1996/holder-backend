@@ -63,6 +63,7 @@ def get_orders():
     u = User.current_user()
     l = Order.find(user=u.id)
     l = [o.json() for o in l]
+    l.reverse()
     for order in l:
         r = []
         for id, q in order['items'].items():
