@@ -117,3 +117,14 @@ def close_sells():
     sells = u.sells
     o = Order.new(user=u.id, items=sells, orderType='卖出')
     return jsonify(o.json())
+
+
+@main.route('/info')
+def info():
+    u = User.current_user()
+    r = {
+        'name': u.name,
+        'phone': u.phone,
+        'dorm': u.dorm
+    }
+    return json_response(r)
