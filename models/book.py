@@ -86,6 +86,6 @@ class Book(Mongua):
 
     @classmethod
     def dec(cls, cart):
-        for k, v in cart.items:
+        for k, v in cart.items():
             b = cls.get(int(k))
             b.decrease(v)
