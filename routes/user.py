@@ -52,6 +52,7 @@ def update_cart():
 def close_cart():
     u = User.current_user()
     cart = u.cart
+    Book.dec(cart)
     o = Order.new(user=u.id, items=cart, orderType='购买')
     return jsonify(o.json())
 

@@ -83,3 +83,9 @@ class Book(Mongua):
             })
             b.fill_douban()
             return b
+
+    @classmethod
+    def dec(cls, cart):
+        for k, v in cart.items:
+            b = cls.get(int(k))
+            b.decrease(v)
