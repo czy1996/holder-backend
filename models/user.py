@@ -27,6 +27,7 @@ class User(Mongua):
             ('avatarUrl', str, ''),
             ('dorm', str, ''),
             ('cart', dict, {}),
+            ('sells', dict, {})
         ]
         fields.extend(super()._fields())
         return fields
@@ -114,4 +115,18 @@ class User(Mongua):
                 r[k] = v
         self.update({
             'cart': r
+        })
+
+    def add_sells(self, id, number=1):
+        n = self.sells.get(str(id), 0)
+        self.sells[str(id)] = n + number
+        self.save()
+
+    def update_sells(self, data):
+        r = {}
+        for k, v in data.items():
+            if v != 0:
+                r[k] = v
+        self.update({
+            'sells': r
         })

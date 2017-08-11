@@ -76,9 +76,43 @@ def get_orders():
     return json_response(l)
 
 
-@main.route('/sellOne/<id>')
-def sell_one(id):
+@main.route('/addSells/<int:id>')
+def add_sells(id):
+    """
+    get code return session
+    :return: 
+    """
     u = User.current_user()
-    Order.new(user=u.id, orderType='卖出', items={
-        id: 1,
-    })
+    u.add_sells(id)
+    return jsonify(u.json())
+
+
+@main.route('/getSells')
+def get_sells():
+    u = User.current_user()
+    log(u.sells.items())
+    r = []
+    for k, v in u.sells.items():
+        b = Book.get(int(k)).json()
+        b.update({
+            'quantity': v,
+        })
+        r.append(b)
+    # r = [Book.get(int(k)).json().update({'quantity': v}) for k, v in u.cart.items()]
+    return json_response(r)
+
+
+@main.route('/updateSells', methods=['POST'])
+def update_sells():
+    u = User.current_user()
+    data = request.json
+    u.update_sells(data)
+    return jsonify(u.json())
+
+
+@main.route('/closeSells')
+def close_sells():
+    u = User.current_user()
+    sells = u.sells
+    o = Order.new(user=u.id, items=sells, orderType='卖出')
+    return jsonify(o.json())
