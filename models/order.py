@@ -8,7 +8,8 @@ class Order(Mongua):
         fields = [
             ('items', dict, {}),
             ('user', int, -1),
-            ('status', str, 'open')
+            ('status', str, 'open'),
+            ('orderType', str, '')
         ]
         fields.extend(super()._fields())
         return fields

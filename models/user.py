@@ -106,3 +106,12 @@ class User(Mongua):
         n = self.cart.get(str(id), 0)
         self.cart[str(id)] = n + number
         self.save()
+
+    def update_cart(self, data):
+        r = {}
+        for k, v in data.items():
+            if v != 0:
+                r[k] = v
+        self.update({
+            'cart': r
+        })

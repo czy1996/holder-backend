@@ -44,9 +44,7 @@ def get_cart():
 def update_cart():
     u = User.current_user()
     data = request.json
-    u.update({
-        'cart': data,
-    })
+    u.update_cart(data)
     return jsonify(u.json())
 
 
@@ -54,7 +52,7 @@ def update_cart():
 def close_cart():
     u = User.current_user()
     cart = u.cart
-    o = Order.new(user=u.id, items=cart)
+    o = Order.new(user=u.id, items=cart, orderType='购买')
     return jsonify(o.json())
 
 
@@ -76,3 +74,11 @@ def get_orders():
         order['items'] = r
         order['time'] = datetime.datetime.fromtimestamp(order['ct']).strftime("%Y-%m-%d %H:%M:%S")
     return json_response(l)
+
+
+@main.route('/sellOne/<id>')
+def sell_one(id):
+    u = User.current_user()
+    Order.new(user=u.id, orderType='卖出', items={
+        id: 1,
+    })

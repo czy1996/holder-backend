@@ -28,8 +28,7 @@ def book_id(id):
 def add():
     data = request.get_json()
     # log(data)
-    b = Book.new(data)
-    b.fill_douban()
+    b = Book.isbn(data["isbn"])
     return json_response(b.json())
 
 

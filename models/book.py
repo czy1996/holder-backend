@@ -72,3 +72,14 @@ class Book(Mongua):
                 'first_price': douban['price'],
             }
             self.update(data)
+
+    @classmethod
+    def isbn(cls, code):
+        if cls.has(isbn=code):
+            return cls.find_one(isbn=code)
+        else:
+            b = cls.new({
+                'isbn': code
+            })
+            b.fill_douban()
+            return b
