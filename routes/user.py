@@ -119,12 +119,27 @@ def close_sells():
     return jsonify(o.json())
 
 
-@main.route('/info')
-def info():
+@main.route('/getInfo')
+def get_info():
     u = User.current_user()
     r = {
+        'is_info': u.is_info,
         'name': u.name,
         'phone': u.phone,
         'dorm': u.dorm
     }
     return json_response(r)
+
+
+@main.route('/updateInfo', methods=['POST'])
+def update_info():
+    u = User.current_user()
+    data = request.json
+    log(data)
+    up = {
+        'is_info': True
+    }
+    up.update(data)
+    log(up)
+    u.update(up)
+    return json_response(u.json())

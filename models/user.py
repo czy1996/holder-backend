@@ -27,7 +27,8 @@ class User(Mongua):
             ('avatarUrl', str, ''),
             ('dorm', str, ''),
             ('cart', dict, {}),
-            ('sells', dict, {})
+            ('sells', dict, {}),
+            ('is_info', bool, False),
         ]
         fields.extend(super()._fields())
         return fields
