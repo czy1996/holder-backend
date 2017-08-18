@@ -21,8 +21,18 @@ def add_cart(id):
     :return: 
     """
     u = User.current_user()
-    u.add_cart(id)
-    return jsonify(u.json())
+    b = Book.get(id)
+    log('inventoty', b.inventory)
+    if b.inventory < u.cart.get(str(id), 0) + 1:
+        r = {
+            'success': False
+        }
+    else:
+        r = {
+            'success': True
+        }
+        u.add_cart(id)
+    return jsonify(r)
 
 
 @main.route('/get')
