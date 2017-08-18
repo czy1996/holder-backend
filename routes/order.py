@@ -11,10 +11,10 @@ from utils import log, json_response
 
 import datetime
 
-main = Blueprint('user', __name__)
+main = Blueprint('order', __name__)
 
 
-@main.route('/getOrders')
+@main.route('/get')
 def get_orders():
     u = User.current_user()
     l = Order.find(user=u.id)
@@ -32,29 +32,3 @@ def get_orders():
         order['items'] = r
         order['time'] = datetime.datetime.fromtimestamp(order['ct']).strftime("%Y-%m-%d %H:%M:%S")
     return json_response(l)
-
-
-@main.route('/getInfo')
-def get_info():
-    u = User.current_user()
-    r = {
-        'is_info': u.is_info,
-        'name': u.name,
-        'phone': u.phone,
-        'dorm': u.dorm
-    }
-    return json_response(r)
-
-
-@main.route('/updateInfo', methods=['POST'])
-def update_info():
-    u = User.current_user()
-    data = request.json
-    log(data)
-    up = {
-        'is_info': True
-    }
-    up.update(data)
-    log(up)
-    u.update(up)
-    return json_response(u.json())
