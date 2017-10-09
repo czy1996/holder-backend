@@ -37,6 +37,7 @@ def add_cart(id):
 
 @main.route('/get')
 def get_cart():
+    log('headers', request.headers)
     u = User.current_user()
     log(u.cart.items())
     r = []
