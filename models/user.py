@@ -100,7 +100,7 @@ class User(Mongua):
 
     @classmethod
     def current_user(cls):
-        session_id = request.headers.get('Session_id', None)
+        session_id = request.headers.get('Session-id', None)
         log('session id', session_id)
         openid = Session.openid_from_sessionid(session_id)
         return cls.find_by_openid(openid)
