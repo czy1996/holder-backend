@@ -50,11 +50,9 @@ def get_info():
 def update_info():
     u = User.current_user()
     data = request.json
-    log(data)
     up = {
         'is_info': True
     }
     up.update(data)
-    log(up)
     u.update(up)
     return json_response(u.json())
