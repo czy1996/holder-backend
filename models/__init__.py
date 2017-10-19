@@ -160,7 +160,7 @@ class Mongua(object):
         """
         name = cls.__name__
         # TODO 过滤掉被删除的元素
-        # kwargs['deleted'] = False
+        kwargs['deleted'] = False
         # TODO, 可以排序
         flag_sort = '__sort'
         sort = kwargs.pop(flag_sort, None)

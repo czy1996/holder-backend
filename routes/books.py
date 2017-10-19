@@ -45,3 +45,16 @@ def update(id):
     data = request.json
     b.update(data)
     return json_response(Book.get(id).json())
+
+
+@main.route('/get')
+def get():
+    r = {
+        "status": "no",
+    }
+    title = request.args.get('title')
+    books = Book.find(title=title)
+    if books:
+        r['status'] = 'ok'
+        r['books'] = [b.json() for b in books]
+    return json_response(r)
