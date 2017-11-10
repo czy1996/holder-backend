@@ -184,7 +184,7 @@ class Mongua(object):
         找不到就返回 None
         """
         # TODO 过滤掉被删除的元素
-        # kwargs['deleted'] = False
+        kwargs['deleted'] = False
         l = cls.find(**kwargs)
         # print('find one debug', kwargs, l)
         if len(l) > 0:

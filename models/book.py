@@ -17,6 +17,7 @@ class Book(Mongua):
             ('second_price', int, 0),
             ('author', list, ''),
             ('category', str, 'other'),
+            ('filled', bool, False)
         ]
         fields.extend(super()._fields())
         return fields
@@ -65,15 +66,21 @@ class Book(Mongua):
             log('no previous isbn')
             douban = douban_isbn(self.isbn)
             log(douban)
-            data = {
-                'title': douban['title'],
-                'publisher': douban['publisher'],
-                'douban_url': douban['url'],
-                'author': douban['author'],
-                'thumb': douban['image'],
-                'description': douban['summary'],
-                'first_price': douban['price'],
-            }
+            try:
+                data = {
+                    'title': douban['title'],
+                    'publisher': douban['publisher'],
+                    'douban_url': douban['url'],
+                    'author': douban['author'],
+                    'thumb': douban['image'],
+                    'description': douban['summary'],
+                    'first_price': douban['price'],
+                    'filled': True
+                }
+            except KeyError:
+                data = {
+                    'filled': False,
+                }
             self.update(data)
 
     @classmethod

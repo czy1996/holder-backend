@@ -49,4 +49,4 @@ def douban_isbn(isbn):
 
 if __name__ == '__main__':
     douban_isbn('9787802562547')
-    # douban_isbn('9787502146788')
+    douban_isbn('9787300181295')
