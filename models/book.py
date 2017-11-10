@@ -60,8 +60,11 @@ class Book(Mongua):
         return b
 
     def fill_douban(self):
+        log('***debug filldouban', self.isbn)
         if self.isbn is not None:
+            log('no previous isbn')
             douban = douban_isbn(self.isbn)
+            log(douban)
             data = {
                 'title': douban['title'],
                 'publisher': douban['publisher'],
