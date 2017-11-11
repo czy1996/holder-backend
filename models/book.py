@@ -87,17 +87,15 @@ class Book(Mongua):
     def isbn(cls, code):
         if cls.has(isbn=code):
             b = cls.find_one(isbn=code)
-            if b.filled:
-                pass
-            else:
-                b.fill_douban()
-            return b
         else:
             b = cls.new({
                 'isbn': code
             })
+        if b.filled:
+            pass
+        else:
             b.fill_douban()
-            return b
+        return b
 
     @classmethod
     def dec(cls, cart):
