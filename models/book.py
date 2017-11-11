@@ -95,6 +95,7 @@ class Book(Mongua):
             pass
         else:
             b.fill_douban()
+        b = b.find_one(isbn=code)
         log('***debug isbn', b.json())
         return b
 
