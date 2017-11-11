@@ -86,7 +86,9 @@ class Book(Mongua):
     @classmethod
     def isbn(cls, code):
         if cls.has(isbn=code):
-            return cls.find_one(isbn=code)
+            b = cls.find_one(isbn=code)
+            if b.filled:
+                return b
         else:
             b = cls.new({
                 'isbn': code
