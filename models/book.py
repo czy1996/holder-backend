@@ -88,7 +88,10 @@ class Book(Mongua):
         if cls.has(isbn=code):
             b = cls.find_one(isbn=code)
             if b.filled:
-                return b
+                pass
+            else:
+                b.fill_douban()
+            return b
         else:
             b = cls.new({
                 'isbn': code
