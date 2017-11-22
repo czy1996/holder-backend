@@ -29,6 +29,7 @@ class User(Mongua):
             ('cart', dict, {}),
             ('sells', dict, {}),
             ('is_info', bool, False),
+            ('qq', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
