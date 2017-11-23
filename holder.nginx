@@ -30,7 +30,8 @@ server {
 server {
     listen 80;
     underscores_in_headers on;
-    rewrite ^(.*) https://$host$1 permanent;
+    server_name cupbholdit.com
+    rewrite ^(.*) https://$server_name1 permanent;
 }
 
 server {
