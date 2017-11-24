@@ -42,7 +42,7 @@ def get_info():
         'name': u.name,
         'phone': u.phone,
         'dorm': u.dorm,
-        'qq': u.qq,
+        'qq': u.QQ,
     }
     return json_response(r)
 
