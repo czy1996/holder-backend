@@ -41,7 +41,8 @@ def get_info():
         'is_info': u.is_info,
         'name': u.name,
         'phone': u.phone,
-        'dorm': u.dorm
+        'dorm': u.dorm,
+        'qq': u.qq,
     }
     return json_response(r)
 
