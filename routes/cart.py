@@ -23,7 +23,7 @@ def add_cart(id):
     u = User.current_user()
     b = Book.get(id)
     log('inventoty', b.inventory)
-    if b.inventory < u.cart.get(str(id), 0) + 1:
+    if b.inventory < u.cart.get(id, 0) + 1:
         r = {
             'success': False
         }

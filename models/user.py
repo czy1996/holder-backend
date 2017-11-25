@@ -107,8 +107,8 @@ class User(Mongua):
         return cls.find_by_openid(openid)
 
     def add_cart(self, id, number=1):
-        n = self.cart.get(str(id), 0)
-        self.cart[str(id)] = n + number
+        n = self.cart.get(id, 0)
+        self.cart[id] = n + number
         self.save()
 
     def update_cart(self, data):
